@@ -10,12 +10,15 @@ This script gets new E-Mails from the specified imap server , stores them in an 
 git clone git@github.com:nordcomputer/printmailattachment.git
 ```
 
+### Run the script
 To run this script, you need to have a running cups service.
 Specify the variables given in the script and run it with:
 
 ```bash
 python3 printmailattachments.py
 ```
+
+### See a list of printers
 If you want to see a list of your printers from cups, run:
 
 ```bash
