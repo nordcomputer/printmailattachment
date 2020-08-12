@@ -3,6 +3,13 @@ This script gets new E-Mails from the specified imap server , stores them in an 
 
 
 ## Usage
+
+
+### Clone the script:
+```bash
+git clone git@github.com:nordcomputer/printmailattachment.git
+```
+
 To run this script, you need to have a running cups service.
 Specify the variables given in the script and run it with:
 
