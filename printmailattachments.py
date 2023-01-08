@@ -78,8 +78,8 @@ try:
                         fp.write(part.get_payload(decode=True))
                         fp.close()
 
-                        if ('invoice' in fileName) or ('Anleitung' in fileName):                       # Prints attachments, if filename contains 'invoice' or 'order'
-                            #os.system("mplayer "+ soundfile)                                          # comment in, if a sound should play, when a attachment gets printed
+                        if ('invoice' in fileName) or ('order' in fileName): # Prints attachments, if filename contains 'invoice' or 'order'
+                            #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
                             filePath1='attachments/'
                             conn = cups.Connection()
                             printers = conn.getPrinters()
@@ -93,8 +93,8 @@ try:
                     fp.write(part.get_payload(decode=True))
                     fp.close()
 
-                    if ('invoice' in fileName) or ('Anleitung' in fileName):                       # Prints attachments, if filename contains 'invoice' or 'order'
-                        #os.system("mplayer "+ soundfile)                                      # comment in, if a sound should play, when a attachment gets printed
+                    if ('invoice' in fileName) or ('order' in fileName): # Prints attachments, if filename contains 'invoice' or 'order'
+                        #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
                         filePath1='attachments/'
                         conn = cups.Connection()
                         printers = conn.getPrinters()
