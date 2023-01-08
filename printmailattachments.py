@@ -21,9 +21,9 @@ imap_server = ''        # Imap server address (without port)
 printer_name=''         # Name of the printer - you can get the names of the printers by running the printer.py script
 Imapfolder='INBOX'      # Imap Folder
 soundfile = ''          # A soundfile, that gets played, when a attachment gets printed
+AllowedSenders = []     # Allowed senders as array - keep empty, if every sender should be allowed
 
-
-detach_dir = '.'
+detach_dir = os.path.dirname(sys.argv[0])
 if 'attachments' not in os.listdir(detach_dir):
     os.mkdir('attachments')
 
@@ -62,29 +62,44 @@ try:
                         return get_text(msg.get_payload(0))
                     else:
                         return msg.get_payload(None, True)
-            string=get_text(mail)                                                          # string = E-Mail Text - maybe for later use...
-            print (string)
+            string=get_text(mail)                           # string = E-Mail Text - maybe for later use...
+
 
 
         if part.get('Content-Disposition') is None:
             continue
         fileName = part.get_filename()
-
         if bool(fileName):
-            filePath = os.path.join(detach_dir, 'attachments', fileName)
-            if not os.path.isfile(filePath) :
-                fp = open(filePath, 'wb')
-                fp.write(part.get_payload(decode=True))
-                fp.close()
+            for val in AllowedSenders:
+                if (val.lower() in mail['From'].lower()):
+                    filePath = os.path.join(detach_dir, 'attachments', fileName)
+                    if not os.path.isfile(filePath) :
+                        fp = open(filePath, 'wb')
+                        fp.write(part.get_payload(decode=True))
+                        fp.close()
 
-                if ('invoice' in fileName) or ('order' in fileName):                       # Prints attachments, if filename contains 'invoice' or 'order'
-                    #os.system("mplayer "+ soundfile)                                      # comment in, if a sound should play, when a attachment gets printed
-                    filePath1='attachments/'
-                    conn = cups.Connection()
-                    printers = conn.getPrinters()
-                    conn.printFile (printer_name, filePath1+fileName, "", {})
-                    print ('Attachment gets printed')
+                        if ('invoice' in fileName) or ('Anleitung' in fileName):                       # Prints attachments, if filename contains 'invoice' or 'order'
+                            #os.system("mplayer "+ soundfile)                                          # comment in, if a sound should play, when a attachment gets printed
+                            filePath1='attachments/'
+                            conn = cups.Connection()
+                            printers = conn.getPrinters()
+                            conn.printFile (printer_name, filePath1+fileName, "", {})
+                            print ('Attachment gets printed')
 
+            if len(AllowedSenders)==0:
+                filePath = os.path.join(detach_dir, 'attachments', fileName)
+                if not os.path.isfile(filePath) :
+                    fp = open(filePath, 'wb')
+                    fp.write(part.get_payload(decode=True))
+                    fp.close()
+
+                    if ('invoice' in fileName) or ('Anleitung' in fileName):                       # Prints attachments, if filename contains 'invoice' or 'order'
+                        #os.system("mplayer "+ soundfile)                                      # comment in, if a sound should play, when a attachment gets printed
+                        filePath1='attachments/'
+                        conn = cups.Connection()
+                        printers = conn.getPrinters()
+                        conn.printFile (printer_name, filePath1+fileName, "", {})
+                        print ('Attachment gets printed')
 
 
 
