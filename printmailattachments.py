@@ -23,7 +23,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 userName = os.getenv('MAILUSERNAME')
 passwd = os.getenv('MAILPASSWORD')
-AllowedSenders = os.getenv('ALLOWEDSENDERS')split(',')
+AllowedSenders = os.getenv('ALLOWEDSENDERS').split(',')
 filenames = os.getenv('FILENAMES').split(',')
 imap_server = os.getenv('IMAPSERVER')
 Imapfolder = os.getenv('IMAPDIRECTORY')
@@ -93,14 +93,14 @@ try:
                                 printers = conn.getPrinters()
                                 conn.printFile (printer_name, filePath1+fileName, "", {})
                                 print ('Attachment gets printed')
-                        
+
                         if not filenames:
-                        #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
-                        filePath1='attachments/'
-                        conn = cups.Connection()
-                        printers = conn.getPrinters()
-                        conn.printFile (printer_name, filePath1+fileName, "", {})
-                        print ('Attachment gets printed')
+                            #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
+                            filePath1='attachments/'
+                            conn = cups.Connection()
+                            printers = conn.getPrinters()
+                            conn.printFile (printer_name, filePath1+fileName, "", {})
+                            print ('Attachment gets printed')
 
             if len(AllowedSenders)==0:
                 filePath = os.path.join(detach_dir, 'attachments', fileName)
