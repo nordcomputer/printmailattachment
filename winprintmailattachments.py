@@ -11,25 +11,25 @@ import time
 import locale
 import shutil
 import pprint
+import win32print
+import win32api
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
+detach_dir = os.path.dirname(os.path.abspath(__file__))
 
-### Set your IMAP Serverdata and the printer name (you need a running cups server on your machine)
-# load account credentials from env file
-detach_dir = os.path.dirname(sys.argv[0])
-dotenv_path = (detach_dir + '/.env')
+
+dotenv_path = (detach_dir + '\\.env')
 load_dotenv(dotenv_path=dotenv_path)
-
+# load account credentials from env file
 userName = os.getenv('MAILUSERNAME')
 passwd = os.getenv('MAILPASSWORD')
-AllowedSenders = os.getenv('ALLOWEDSENDERS')split(',')
+AllowedSenders = os.getenv('ALLOWEDSENDERS').split(',')
 filenames = os.getenv('FILENAMES').split(',')
 imap_server = os.getenv('IMAPSERVER')
 Imapfolder = os.getenv('IMAPDIRECTORY')
 soundfile=os.getenv('SOUNDFILE')
 printer_name = os.getenv('PRINTERNAME')
-
 
 if 'attachments' not in os.listdir(detach_dir):
     os.mkdir('attachments')
@@ -50,7 +50,6 @@ try:
     # Iterating over all emails
 
     for msgId in data[0].split():
-
         typ, messageParts = imapSession.fetch(msgId, "(RFC822)")
 
         if typ != 'OK':
@@ -84,23 +83,19 @@ try:
                         fp = open(filePath, 'wb')
                         fp.write(part.get_payload(decode=True))
                         fp.close()
-
                         for val in filenames:
                             if val in fileName:
                                 #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
-                                filePath1='attachments/'
-                                conn = cups.Connection()
-                                printers = conn.getPrinters()
-                                conn.printFile (printer_name, filePath1+fileName, "", {})
+                                filePath1="\\attachments\\"
+                                pdf_file_name = detach_dir+filePath1+fileName
+                                win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                                 print ('Attachment gets printed')
-                        
                         if not filenames:
-                        #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
-                        filePath1='attachments/'
-                        conn = cups.Connection()
-                        printers = conn.getPrinters()
-                        conn.printFile (printer_name, filePath1+fileName, "", {})
-                        print ('Attachment gets printed')
+                            #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
+                            filePath1="\\attachments\\"
+                            pdf_file_name = detach_dir+filePath1+fileName                        
+                            win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
+                            print ('Attachment gets printed')
 
             if len(AllowedSenders)==0:
                 filePath = os.path.join(detach_dir, 'attachments', fileName)
@@ -108,24 +103,20 @@ try:
                     fp = open(filePath, 'wb')
                     fp.write(part.get_payload(decode=True))
                     fp.close()
-
+                    print(fileName)
                     for val in filenames:
                         if val in fileName:
                             #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
-                            filePath1='attachments/'
-                            conn = cups.Connection()
-                            printers = conn.getPrinters()
-                            conn.printFile (printer_name, filePath1+fileName, "", {})
+                            filePath1="\\attachments\\"
+                            pdf_file_name = detach_dir+filePath1+fileName                        
+                            win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                             print ('Attachment gets printed')
-
                     if not filenames:
                         #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
-                        filePath1='attachments/'
-                        conn = cups.Connection()
-                        printers = conn.getPrinters()
-                        conn.printFile (printer_name, filePath1+fileName, "", {})
-                        print ('Attachment gets printed')
-
+                            filePath1="\\attachments\\"
+                            pdf_file_name = detach_dir+filePath1+fileName                        
+                            win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
+                            print ('Attachment gets printed')
 
 
     imapSession.close()

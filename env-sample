@@ -1,0 +1,8 @@
+MAILUSERNAME = "example@example.com"                            # Imap Username
+MAILPASSWORD = "yourpassword"                                   # Imap Password
+ALLOWEDSENDERS = "example1@example.de,example2@example.de"      # Allowed senders seperated by commas. Keep empty, if every sender should be allowed
+IMAPSERVER = "imap.example.de"                                  # Imap server address (without port)
+IMAPDIRECTORY = "INBOX.Examplefolder"                           # Imap Folder
+PRINTERNAME = "Printername"                                     # Name of the printer - you can get the names of the printers by running the printer.py/winprinters.py script
+SOUNDFILE = ""                                                  # A soundfile, that gets played, when a attachment gets printed
+FILENAMES = "invoice,order"                                       # Strings, seperated by commas. the filename of the attachment must contain one of those strings to get printed
