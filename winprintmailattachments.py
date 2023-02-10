@@ -118,7 +118,7 @@ try:
                             win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                             print ('Attachment gets printed')
 
-
+        imapSession.store(msgId, '+FLAGS', '\Seen')
     imapSession.close()
     imapSession.logout()
 except :

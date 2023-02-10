@@ -127,7 +127,7 @@ try:
                         print ('Attachment gets printed')
 
 
-
+        imapSession.store(msgId, '+FLAGS', '\Seen')
     imapSession.close()
     imapSession.logout()
 except :
