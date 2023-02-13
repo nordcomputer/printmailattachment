@@ -93,6 +93,7 @@ try:
                                 printers = conn.getPrinters()
                                 conn.printFile (printer_name, filePath1+fileName, "", {})
                                 print ('Attachment gets printed')
+                                imapSession.store(msgId, '+FLAGS', '\Seen')
 
                         if not filenames:
                             #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
@@ -101,6 +102,7 @@ try:
                             printers = conn.getPrinters()
                             conn.printFile (printer_name, filePath1+fileName, "", {})
                             print ('Attachment gets printed')
+                            imapSession.store(msgId, '+FLAGS', '\Seen')
 
             if len(AllowedSenders)==0:
                 filePath = os.path.join(detach_dir, 'attachments', fileName)
@@ -117,6 +119,7 @@ try:
                             printers = conn.getPrinters()
                             conn.printFile (printer_name, filePath1+fileName, "", {})
                             print ('Attachment gets printed')
+                            imapSession.store(msgId, '+FLAGS', '\Seen')
 
                     if not filenames:
                         #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
@@ -125,9 +128,9 @@ try:
                         printers = conn.getPrinters()
                         conn.printFile (printer_name, filePath1+fileName, "", {})
                         print ('Attachment gets printed')
+                        imapSession.store(msgId, '+FLAGS', '\Seen')
 
 
-        imapSession.store(msgId, '+FLAGS', '\Seen')
     imapSession.close()
     imapSession.logout()
 except :

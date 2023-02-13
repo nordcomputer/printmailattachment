@@ -90,12 +90,14 @@ try:
                                 pdf_file_name = detach_dir+filePath1+fileName
                                 win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                                 print ('Attachment gets printed')
+                                imapSession.store(msgId, '+FLAGS', '\Seen')
                         if not filenames:
                             #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
                             filePath1="\\attachments\\"
-                            pdf_file_name = detach_dir+filePath1+fileName                        
+                            pdf_file_name = detach_dir+filePath1+fileName
                             win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                             print ('Attachment gets printed')
+                            imapSession.store(msgId, '+FLAGS', '\Seen')
 
             if len(AllowedSenders)==0:
                 filePath = os.path.join(detach_dir, 'attachments', fileName)
@@ -108,17 +110,19 @@ try:
                         if val in fileName:
                             #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
                             filePath1="\\attachments\\"
-                            pdf_file_name = detach_dir+filePath1+fileName                        
+                            pdf_file_name = detach_dir+filePath1+fileName
                             win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                             print ('Attachment gets printed')
+                            imapSession.store(msgId, '+FLAGS', '\Seen')
                     if not filenames:
                         #os.system("mplayer "+ soundfile)                # comment in, if a sound should play, when a attachment gets printed
                             filePath1="\\attachments\\"
-                            pdf_file_name = detach_dir+filePath1+fileName                        
+                            pdf_file_name = detach_dir+filePath1+fileName
                             win32api.ShellExecute(0, "printto", pdf_file_name, f'"{printer_name}"', ".", 0)
                             print ('Attachment gets printed')
+                            imapSession.store(msgId, '+FLAGS', '\Seen')
 
-        imapSession.store(msgId, '+FLAGS', '\Seen')
+
     imapSession.close()
     imapSession.logout()
 except :
